@@ -194,3 +194,36 @@ func TestSourceNilSetValue(t *testing.T) {
 	assert.Equal(t, err, ErrorJSONPathNotExisted)
 
 }
+
+func ExampleJSONPathSetValue() {
+
+	source := `
+    {
+        "a":1,
+        "b":2
+    }
+    `
+	jsonpath := "$.c"
+	value := `
+	{
+		"key1": "val2",
+		"key2":"va2"
+	}`
+	var sourcejson interface{}
+	var valuejson interface{}
+	json.Unmarshal([]byte(source), &sourcejson)
+	json.Unmarshal([]byte(value), &valuejson)
+
+	dest, _ := SetValue(sourcejson, jsonpath, valuejson)
+	fmt.Println(dest)
+	// Output
+	// {
+	//     "a":1,
+	//     "b":2,
+	//     "c": {
+	//         "key1": "val2",
+	//         "key2": "va2"
+	// 		}
+	// }
+	//
+}

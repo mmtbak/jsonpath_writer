@@ -17,25 +17,35 @@ import "github.com/mmtbak/jsonpath_writer"
 
 func main(){
 
-    source := `
+	source := `
     {
         "a":1,
         "b":2
     }
     `
-    jsonpath := "$.c"
-    add_data :=
-    sourcejson, _ := json.Umashall([]byte(source))
-    dest, _ := jsonpath_writer.Set(sourcejson, jsonpath,  add_data)
-    fmt.Println(dest.String)
-    // Output
-    // {
-    //     "a":1,
-    //     "b":2,
-    //     "c":3
-    // }
-    //
-}
+	jsonpath := "$.c"
+	value := `
+	{
+		"key1": "val2",
+		"key2":"va2"
+	}`
+	var sourcejson interface{}
+	var valuejson interface{}
+	json.Unmarshal([]byte(source), &sourcejson)
+	json.Unmarshal([]byte(value), &valuejson)
 
+	dest, _ := jsonpath_writer.SetValue(sourcejson, jsonpath, valuejson)
+	fmt.Println(dest)
+	// Output
+	// {
+	//     "a":1,
+	//     "b":2,
+	//     "c": {
+	//         "key1": "val2",
+	//         "key2": "va2"
+	// 		}
+	// }
+	//
+}
 
 ```
