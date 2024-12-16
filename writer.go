@@ -13,6 +13,12 @@ func ParseJSONPathString(path string) (*JSONPathCompiled, error) {
 	if err != nil {
 		return nil, err
 	}
+	if len(jpexpr) == 0 {
+		return nil, ErrorJSONPathInvalid
+	}
+	if jpexpr[0] != RootFrag {
+		return nil, ErrorJSONPathInvalid
+	}
 
 	finalstep := jpexpr[len(jpexpr)-1]
 
@@ -44,38 +50,6 @@ func (jpc JSONPathCompiled) SetAble() bool {
 
 // SetValue sets the value object in the source object by the compiled JSONPath expression.
 func (jpc JSONPathCompiled) SetValue(source interface{}, value interface{}) (interface{}, error) {
-
-	// var jsonMap map[string]interface{}
-	// var ok bool
-
-	// var curobj = obj
-	// var len = len(rc.compiled.steps)
-	// // 正向操作有不可预测的风险，反向合并就好了
-
-	// for idx, s := range rc.compiled.steps {
-	// 	// "key", "idx"
-	// 	switch s.op {
-	// 	case "key":
-	// 		if jsonMap, ok = curobj.(map[string]interface{}); !ok {
-	// 			return nil, fmt.Errorf("data error :  key '%s' data should be map", s.key)
-	// 		}
-	// 		// 最后一个key
-	// 		if idx+1 == len {
-	// 			jsonMap[s.key] = value
-	// 		}
-	// 		// 不是最后一个key
-	// 		val, exists := jsonMap[s.key]
-	// 		if !exists {
-	// 			// 如果不存在， 创建新值
-	// 			jsonMap[s.key] = map[string]interface{}{}
-	// 			curobj = jsonMap[s.key]
-	// 			// return nil, fmt.Errorf("key error: '%s' not found in object", s.key)
-	// 		} else {
-	// 			curobj = val
-	// 		}
-
-	// 	}
-	// }
 
 	if !jpc.SetAble() {
 		return nil, ErrorJSONPathNotSetAble
