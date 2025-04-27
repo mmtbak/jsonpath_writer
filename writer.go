@@ -102,7 +102,8 @@ func (jpc JSONPathCompiled) SetValue(source interface{}, value interface{}) (int
 
 }
 
-func SetValue(source interface{}, path string, value interface{}) (data interface{}, err error) {
+// SetValue sets the value object in the source object by the JSONPath expression.
+func SetValue(path string, source any, value any) (data any, err error) {
 	jpc, err := ParseJSONPathString(path)
 	if err != nil {
 		return nil, err

@@ -189,10 +189,9 @@ func TestJSONPathSetValue(t *testing.T) {
 
 func TestSourceNilSetValue(t *testing.T) {
 	path := "$.a[0].y"
-	dest, err := SetValue(nil, path, 1)
+	dest, err := SetValue(path, nil, 1)
 	assert.Equal(t, dest, nil)
 	assert.Equal(t, err, ErrorJSONPathNotExisted)
-
 }
 
 func ExampleJSONPathSetValue() {
@@ -214,7 +213,7 @@ func ExampleJSONPathSetValue() {
 	json.Unmarshal([]byte(source), &sourcejson)
 	json.Unmarshal([]byte(value), &valuejson)
 
-	dest, _ := SetValue(sourcejson, jsonpath, valuejson)
+	dest, _ := SetValue(jsonpath, sourcejson, valuejson)
 	fmt.Println(dest)
 	// Output
 	// {
